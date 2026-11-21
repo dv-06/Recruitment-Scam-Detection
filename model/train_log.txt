@@ -1,0 +1,127 @@
+C:\Users\Dishanth V\AppData\Roaming\Python\Python314\site-packages\sklearn\neural_network\_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (100) reached and the optimization hasn't converged yet.
+  warnings.warn(
+C:\Users\Dishanth V\AppData\Roaming\Python\Python314\site-packages\sklearn\neural_network\_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (100) reached and the optimization hasn't converged yet.
+  warnings.warn(
+C:\Users\Dishanth V\AppData\Roaming\Python\Python314\site-packages\sklearn\neural_network\_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (100) reached and the optimization hasn't converged yet.
+  warnings.warn(
+C:\Users\Dishanth V\AppData\Roaming\Python\Python314\site-packages\sklearn\neural_network\_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (100) reached and the optimization hasn't converged yet.
+  warnings.warn(
+C:\Users\Dishanth V\AppData\Roaming\Python\Python314\site-packages\sklearn\neural_network\_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (100) reached and the optimization hasn't converged yet.
+  warnings.warn(
+C:\Users\Dishanth V\AppData\Roaming\Python\Python314\site-packages\sklearn\neural_network\_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (100) reached and the optimization hasn't converged yet.
+  warnings.warn(
+C:\Users\Dishanth V\AppData\Roaming\Python\Python314\site-packages\sklearn\neural_network\_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (20) reached and the optimization hasn't converged yet.
+  warnings.warn(
+C:\Users\Dishanth V\AppData\Roaming\Python\Python314\site-packages\sklearn\neural_network\_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (50) reached and the optimization hasn't converged yet.
+  warnings.warn(
+C:\Users\Dishanth V\AppData\Roaming\Python\Python314\site-packages\sklearn\neural_network\_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (100) reached and the optimization hasn't converged yet.
+  warnings.warn(
+C:\Users\Dishanth V\AppData\Roaming\Python\Python314\site-packages\sklearn\neural_network\_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (100) reached and the optimization hasn't converged yet.
+  warnings.warn(
+======================================================================
+STEP 1 - Load and inspect the dataset
+======================================================================
+Shape            : 17880 rows x 18 columns
+Columns          : ['job_id', 'title', 'location', 'department', 'salary_range', 'company_profile', 'description', 'requirements', 'benefits', 'telecommuting', 'has_company_logo', 'has_questions', 'employment_type', 'required_experience', 'required_education', 'industry', 'function', 'fraudulent']
+Duplicate rows   : 0
+
+Missing values per column:
+job_id                     0
+title                      0
+location                 346
+department             11547
+salary_range           15012
+company_profile         3308
+description                1
+requirements            2696
+benefits                7212
+telecommuting              0
+has_company_logo           0
+has_questions              0
+employment_type         3471
+required_experience     7050
+required_education      8105
+industry                4903
+function                6455
+fraudulent                 0
+
+Target column 'fraudulent':
+  0 (Real      ) :  17014  (95.16%)
+  1 (Fraudulent) :    866  (4.84%)
+
+======================================================================
+STEP 2 - Clean, add simple features, select columns
+======================================================================
+Rows after dropping duplicates : 17880
+Selected feature columns       : ['employment_type', 'required_experience', 'required_education', 'industry', 'function', 'telecommuting', 'has_company_logo', 'has_questions', 'has_salary_range', 'description_length', 'requirements_length', 'company_profile_length']
+Number of input features       : 12
+
+Train rows: 14304  |  Test rows: 3576
+Fraud in train: 693 / 14304
+Fraud in test : 173 / 3576
+
+After oversampling the training set: 27222 rows (13611 fraudulent / 13611 real)
+
+======================================================================
+STEP 3 - Save figures for the report
+======================================================================
+  saved 01_class_distribution.png
+
+======================================================================
+STEP 4 - Train the baseline MLP
+======================================================================
+Architecture: input(12) -> 64 -> 32 -> 1
+Training finished in 34.9s after 100 iterations
+
+--- Test set performance (baseline) ---
+Accuracy : 0.9662
+Precision: 0.6275
+Recall   : 0.7399
+F1-score : 0.6790
+
+Classification report:
+              precision    recall  f1-score   support
+
+        Real       0.99      0.98      0.98      3403
+  Fraudulent       0.63      0.74      0.68       173
+
+    accuracy                           0.97      3576
+   macro avg       0.81      0.86      0.83      3576
+weighted avg       0.97      0.97      0.97      3576
+
+Confusion matrix [[TN, FP], [FN, TP]]:
+[[3327   76]
+ [  45  128]]
+
+======================================================================
+STEP 5 - Experiments (one change at a time)
+======================================================================
+  Baseline (64-32, relu, lr=0.001)              acc=0.966 prec=0.627 rec=0.740 f1=0.679
+  Learning rate = 0.0001                        acc=0.942 prec=0.445 rec=0.792 f1=0.570
+  Learning rate = 0.01                          acc=0.966 prec=0.635 rec=0.705 f1=0.668
+  One hidden layer (32)                         acc=0.948 prec=0.475 rec=0.763 f1=0.585
+  Three hidden layers (128-64-32)               acc=0.961 prec=0.573 rec=0.728 f1=0.641
+  Fewer iterations (max_iter=20)                acc=0.943 prec=0.450 rec=0.780 f1=0.571
+  Fewer iterations (max_iter=50)                acc=0.956 prec=0.532 rec=0.769 f1=0.629
+  More iterations (max_iter=200)                acc=0.961 prec=0.579 rec=0.740 f1=0.650
+  Activation = tanh                             acc=0.959 prec=0.554 rec=0.740 f1=0.634
+  Activation = logistic                         acc=0.959 prec=0.560 rec=0.751 f1=0.642
+
+Experiment table saved to D:\5th Sem\ML Project\model\experiments.csv
+Best experiment by F1: Baseline (64-32, relu, lr=0.001) (F1=0.679)
+
+======================================================================
+STEP 6 - Graphs
+======================================================================
+  saved 02_training_loss.png
+  saved 03_f1_vs_iterations.png
+  saved 04_experiment_comparison.png
+  saved 05_confusion_matrix.png
+
+======================================================================
+STEP 7 - Save model and metadata
+======================================================================
+  model    -> D:\5th Sem\ML Project\model\fake_job_mlp.joblib
+  metadata -> D:\5th Sem\ML Project\model\metadata.json
+
+Done. Start the demo with:  streamlit run app.py

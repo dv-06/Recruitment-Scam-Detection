@@ -1,0 +1,294 @@
+{
+  "dataset": {
+    "rows": 17880,
+    "columns": 18,
+    "duplicates_removed": 0,
+    "fraud_count": 866,
+    "fraud_percent": 4.84
+  },
+  "features": {
+    "selected_columns": [
+      "employment_type",
+      "required_experience",
+      "required_education",
+      "industry",
+      "function",
+      "telecommuting",
+      "has_company_logo",
+      "has_questions",
+      "has_salary_range",
+      "description_length",
+      "requirements_length",
+      "company_profile_length"
+    ],
+    "categorical": [
+      "employment_type",
+      "required_experience",
+      "required_education",
+      "industry",
+      "function"
+    ],
+    "numeric": [
+      "telecommuting",
+      "has_company_logo",
+      "has_questions",
+      "has_salary_range",
+      "description_length",
+      "requirements_length",
+      "company_profile_length"
+    ],
+    "n_features_after_encoding": 64
+  },
+  "split": {
+    "train_rows": 14304,
+    "test_rows": 3576,
+    "train_rows_after_oversampling": 27222,
+    "test_size": 0.2,
+    "random_state": 42
+  },
+  "baseline": {
+    "params": {
+      "hidden_layer_sizes": [
+        64,
+        32
+      ],
+      "activation": "relu",
+      "solver": "adam",
+      "learning_rate_init": 0.001,
+      "max_iter": 100,
+      "random_state": 42
+    },
+    "iterations": 100,
+    "train_seconds": 34.9,
+    "accuracy": 0.9662,
+    "precision": 0.6275,
+    "recall": 0.7399,
+    "f1": 0.679,
+    "confusion_matrix": [
+      [
+        3327,
+        76
+      ],
+      [
+        45,
+        128
+      ]
+    ],
+    "classification_report": "              precision    recall  f1-score   support\n\n        Real       0.99      0.98      0.98      3403\n  Fraudulent       0.63      0.74      0.68       173\n\n    accuracy                           0.97      3576\n   macro avg       0.81      0.86      0.83      3576\nweighted avg       0.97      0.97      0.97      3576\n"
+  },
+  "best_experiment": {
+    "name": "Baseline (64-32, relu, lr=0.001)",
+    "f1": 0.679
+  },
+  "experiments": [
+    {
+      "Experiment": "Baseline (64-32, relu, lr=0.001)",
+      "Hidden layers": "(64, 32)",
+      "Activation": "relu",
+      "Learning rate": 0.001,
+      "Max iterations": 100,
+      "Iterations run": 100,
+      "Accuracy": 0.9662,
+      "Precision": 0.6275,
+      "Recall": 0.7399,
+      "F1": 0.679,
+      "Train time (s)": 32.0
+    },
+    {
+      "Experiment": "Learning rate = 0.0001",
+      "Hidden layers": "(64, 32)",
+      "Activation": "relu",
+      "Learning rate": 0.0001,
+      "Max iterations": 100,
+      "Iterations run": 100,
+      "Accuracy": 0.9421,
+      "Precision": 0.4448,
+      "Recall": 0.7919,
+      "F1": 0.5696,
+      "Train time (s)": 38.6
+    },
+    {
+      "Experiment": "Learning rate = 0.01",
+      "Hidden layers": "(64, 32)",
+      "Activation": "relu",
+      "Learning rate": 0.01,
+      "Max iterations": 100,
+      "Iterations run": 100,
+      "Accuracy": 0.9662,
+      "Precision": 0.6354,
+      "Recall": 0.7052,
+      "F1": 0.6685,
+      "Train time (s)": 32.3
+    },
+    {
+      "Experiment": "One hidden layer (32)",
+      "Hidden layers": "(32,)",
+      "Activation": "relu",
+      "Learning rate": 0.001,
+      "Max iterations": 100,
+      "Iterations run": 100,
+      "Accuracy": 0.9477,
+      "Precision": 0.4748,
+      "Recall": 0.763,
+      "F1": 0.5854,
+      "Train time (s)": 16.2
+    },
+    {
+      "Experiment": "Three hidden layers (128-64-32)",
+      "Hidden layers": "(128, 64, 32)",
+      "Activation": "relu",
+      "Learning rate": 0.001,
+      "Max iterations": 100,
+      "Iterations run": 100,
+      "Accuracy": 0.9606,
+      "Precision": 0.5727,
+      "Recall": 0.7283,
+      "F1": 0.6412,
+      "Train time (s)": 50.6
+    },
+    {
+      "Experiment": "Fewer iterations (max_iter=20)",
+      "Hidden layers": "(64, 32)",
+      "Activation": "relu",
+      "Learning rate": 0.001,
+      "Max iterations": 20,
+      "Iterations run": 20,
+      "Accuracy": 0.9432,
+      "Precision": 0.45,
+      "Recall": 0.7803,
+      "F1": 0.5708,
+      "Train time (s)": 5.1
+    },
+    {
+      "Experiment": "Fewer iterations (max_iter=50)",
+      "Hidden layers": "(64, 32)",
+      "Activation": "relu",
+      "Learning rate": 0.001,
+      "Max iterations": 50,
+      "Iterations run": 50,
+      "Accuracy": 0.9561,
+      "Precision": 0.532,
+      "Recall": 0.7688,
+      "F1": 0.6288,
+      "Train time (s)": 14.6
+    },
+    {
+      "Experiment": "More iterations (max_iter=200)",
+      "Hidden layers": "(64, 32)",
+      "Activation": "relu",
+      "Learning rate": 0.001,
+      "Max iterations": 200,
+      "Iterations run": 107,
+      "Accuracy": 0.9614,
+      "Precision": 0.5792,
+      "Recall": 0.7399,
+      "F1": 0.6497,
+      "Train time (s)": 33.7
+    },
+    {
+      "Experiment": "Activation = tanh",
+      "Hidden layers": "(64, 32)",
+      "Activation": "tanh",
+      "Learning rate": 0.001,
+      "Max iterations": 100,
+      "Iterations run": 100,
+      "Accuracy": 0.9586,
+      "Precision": 0.5541,
+      "Recall": 0.7399,
+      "F1": 0.6337,
+      "Train time (s)": 39.2
+    },
+    {
+      "Experiment": "Activation = logistic",
+      "Hidden layers": "(64, 32)",
+      "Activation": "logistic",
+      "Learning rate": 0.001,
+      "Max iterations": 100,
+      "Iterations run": 100,
+      "Accuracy": 0.9595,
+      "Precision": 0.5603,
+      "Recall": 0.7514,
+      "F1": 0.642,
+      "Train time (s)": 31.4
+    }
+  ],
+  "dropdown_options": {
+    "employment_type": [
+      "Contract",
+      "Full-time",
+      "Other",
+      "Part-time",
+      "Temporary"
+    ],
+    "required_experience": [
+      "Associate",
+      "Director",
+      "Entry level",
+      "Executive",
+      "Internship",
+      "Mid-Senior level",
+      "Not Applicable"
+    ],
+    "required_education": [
+      "Associate Degree",
+      "Bachelor's Degree",
+      "Certification",
+      "Doctorate",
+      "High School or equivalent",
+      "Master's Degree",
+      "Professional",
+      "Some College Coursework Completed",
+      "Some High School Coursework",
+      "Unspecified",
+      "Vocational",
+      "Vocational - Degree",
+      "Vocational - HS Diploma"
+    ]
+  },
+  "top_categories": {
+    "industry": [
+      "Information Technology and Services",
+      "Computer Software",
+      "Internet",
+      "Marketing and Advertising",
+      "Education Management",
+      "Financial Services",
+      "Hospital & Health Care",
+      "Consumer Services",
+      "Telecommunications",
+      "Oil & Energy",
+      "Retail",
+      "Real Estate",
+      "Accounting",
+      "Construction",
+      "E-Learning",
+      "Management Consulting",
+      "Design",
+      "Health, Wellness and Fitness",
+      "Staffing and Recruiting",
+      "Insurance"
+    ],
+    "function": [
+      "Information Technology",
+      "Sales",
+      "Engineering",
+      "Customer Service",
+      "Marketing",
+      "Administrative",
+      "Design",
+      "Health Care Provider",
+      "Other",
+      "Education",
+      "Management",
+      "Business Development",
+      "Accounting/Auditing",
+      "Human Resources",
+      "Project Management",
+      "Finance",
+      "Consulting",
+      "Writing/Editing",
+      "Art/Creative",
+      "Production"
+    ]
+  }
+}

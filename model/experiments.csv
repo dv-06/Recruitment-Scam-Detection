@@ -1,0 +1,11 @@
+Experiment,Hidden layers,Activation,Learning rate,Max iterations,Iterations run,Accuracy,Precision,Recall,F1,Train time (s)
+"Baseline (64-32, relu, lr=0.001)","(64, 32)",relu,0.001,100,100,0.9662,0.6275,0.7399,0.679,32.0
+Learning rate = 0.0001,"(64, 32)",relu,0.0001,100,100,0.9421,0.4448,0.7919,0.5696,38.6
+Learning rate = 0.01,"(64, 32)",relu,0.01,100,100,0.9662,0.6354,0.7052,0.6685,32.3
+One hidden layer (32),"(32,)",relu,0.001,100,100,0.9477,0.4748,0.763,0.5854,16.2
+Three hidden layers (128-64-32),"(128, 64, 32)",relu,0.001,100,100,0.9606,0.5727,0.7283,0.6412,50.6
+Fewer iterations (max_iter=20),"(64, 32)",relu,0.001,20,20,0.9432,0.45,0.7803,0.5708,5.1
+Fewer iterations (max_iter=50),"(64, 32)",relu,0.001,50,50,0.9561,0.532,0.7688,0.6288,14.6
+More iterations (max_iter=200),"(64, 32)",relu,0.001,200,107,0.9614,0.5792,0.7399,0.6497,33.7
+Activation = tanh,"(64, 32)",tanh,0.001,100,100,0.9586,0.5541,0.7399,0.6337,39.2
+Activation = logistic,"(64, 32)",logistic,0.001,100,100,0.9595,0.5603,0.7514,0.642,31.4
