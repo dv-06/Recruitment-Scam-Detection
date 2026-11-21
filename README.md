@@ -15,6 +15,7 @@ dataset in `dataset/` (random_state = 42, so the run is reproducible).
 | Item | Value |
 |---|---|
 | Source | Kaggle — [Real / Fake Job Posting Prediction](https://www.kaggle.com/datasets/shivamb/real-or-fake-fake-jobposting-prediction) by Shivam Bansal |
+| Licence | **CC0: Public Domain**, so the CSV is included in this repository and may be redistributed |
 | File | `dataset/fake_job_postings.csv` |
 | Rows | 17,880 |
 | Columns | 18 |
