@@ -5,7 +5,7 @@ URL-first Streamlit demo for the fake job posting detector.
 
 Default flow
     1. paste a public job posting URL
-    2. press "Fetch & Analyze"
+    2. press "Fetch and analyze"
     3. job_extractor.py reads the page and maps it onto the model features
     4. the saved MLP (model/fake_job_mlp.joblib) predicts
     5. the prediction and the extracted details are shown
@@ -31,7 +31,7 @@ METADATA_PATH = pp.MODEL_DIR / "metadata.json"
 # A real, public job posting used by the "Try a sample URL" button.
 SAMPLE_URL = "https://www.python.org/jobs/8219/"
 
-st.set_page_config(page_title="Job Scam Checker", page_icon="🕵️", layout="centered")
+st.set_page_config(page_title="Recruitment Scam Detection", layout="centered")
 
 
 @st.cache_resource
@@ -221,32 +221,32 @@ def show_prediction(analysis: dict) -> None:
     probability = analysis["probability"]
     is_fraud = analysis["is_fraud"]
 
-    st.subheader("Result")
+    st.subheader("Prediction result")
     if is_fraud:
-        st.error("⚠️ Potentially fraudulent — verify carefully.")
+        st.error("Potentially fraudulent posting. Verify the employer before applying.")
     else:
-        st.success("✅ Likely genuine.")
+        st.success("Likely genuine posting. No strong fraud indicators were detected.")
 
     col_a, col_b = st.columns(2)
     col_a.metric("Fraud probability", f"{probability * 100:.1f}%")
     col_b.metric("Classification", "Fraudulent" if is_fraud else "Genuine")
     st.progress(min(max(probability, 0.0), 1.0))
     st.caption(
-        "The score is the output of the neural network (MLPClassifier) for the fraudulent "
-        "class. A score close to 50% means the model is unsure. The model only looks at "
-        "structured cues such as flags and text length — not at the meaning of the words — "
-        "so a well-written scam can still be missed."
+        "The probability is the output of the neural network (MLPClassifier) for the fraudulent "
+        "class. A value close to 50% indicates an uncertain prediction. The model uses structured "
+        "cues such as flags and text length, not the meaning of the words, so a well-written scam "
+        "can still be missed."
     )
 
 
 # ------------------------------------------------------------------- layout ----
 model, metadata = load_artifacts()
 
-st.title("🕵️ Job Scam Checker")
+st.title("Recruitment Scam Detection")
 st.write(
-    "Paste the link of a public job posting. The app fetches the page, extracts the "
-    "job details and runs the trained model to estimate whether the posting looks "
-    "**genuine** or **potentially fraudulent**."
+    "Paste the link of a public job posting. The application fetches the page, extracts the "
+    "job details and runs the trained neural network model to estimate whether the posting "
+    "appears **genuine** or **potentially fraudulent**."
 )
 
 if model is None:
@@ -278,17 +278,17 @@ with st.sidebar:
 
     st.divider()
     st.subheader("Sample URLs")
-    if st.button("Posting that works", width="stretch"):
+    if st.button("Working posting", width="stretch"):
         st.session_state["job_url"] = SAMPLE_URL
         st.rerun()
-    if st.button("Link that cannot be read", width="stretch"):
+    if st.button("Unreadable link", width="stretch"):
         st.session_state["job_url"] = "https://example.com/"
         st.rerun()
-    st.caption("The second link has no job posting, so the manual form opens.")
+    st.caption("The second link contains no job posting, so the manual form opens instead.")
 
     st.divider()
     st.subheader("Manual examples")
-    st.caption("These fill the manual form (fallback).")
+    st.caption("These values fill the manual form used as fallback.")
     if st.button("Genuine posting", width="stretch"):
         st.session_state["manual_mode"] = True
         prefill(EXAMPLES["Genuine posting"])
@@ -300,14 +300,14 @@ with st.sidebar:
 
     st.divider()
     st.caption(
-        "Student mini-project. The prediction is an estimate based on the training "
-        "dataset and cannot prove that a job posting is fraudulent or genuine."
+        "Student mini-project. The prediction is an estimate obtained from the training "
+        "dataset and cannot prove that a posting is fraudulent or genuine."
     )
 
 
 # ==================================================== 1. URL (primary flow) ===
 with st.container(border=True):
-    st.subheader("1. Paste a job posting URL")
+    st.subheader("1. Job posting URL")
     url_value = st.text_input(
         "Job posting URL",
         key="job_url",
@@ -316,12 +316,12 @@ with st.container(border=True):
     )
     url_col, manual_col = st.columns([3, 2])
     with url_col:
-        fetch_clicked = st.button("🔎 Fetch & Analyze", type="primary", width="stretch")
+        fetch_clicked = st.button("Fetch and analyze", type="primary", width="stretch")
     with manual_col:
-        manual_clicked = st.button("✍️ Enter details manually", width="stretch")
+        manual_clicked = st.button("Enter details manually", width="stretch")
     st.caption(
-        "Only public pages are read. Pages that need a login, a CAPTCHA or a paywall are "
-        "never bypassed — you will be asked to paste the details instead."
+        "Only public pages are read. Pages that require a login, a CAPTCHA or a paywall are "
+        "never bypassed; the details can be entered manually instead."
     )
 
 if manual_clicked:
@@ -357,9 +357,9 @@ if fetch_clicked:
 fetch_error = st.session_state.get("fetch_error")
 if fetch_error:
     st.warning(
-        "**We could not read a job posting from that link.**\n\n"
+        "**A job posting could not be read from that link.**\n\n"
         f"{fetch_error['message']}\n\n"
-        "You can paste the job details manually below — the same model will be used."
+        "The details can be entered manually below; the same model is used for the prediction."
     )
 
 
@@ -370,26 +370,28 @@ if analysis:
     st.divider()
     if analysis["mode"] == "url":
         st.caption(
-            f"📄 Analyzing **{analysis.get('page_title') or analysis.get('url')}**"
-            + (f" · {analysis['site']}" if analysis.get("site") else "")
+            f"Analysed page: **{analysis.get('page_title') or analysis.get('url')}**"
+            + (f" ({analysis['site']})" if analysis.get("site") else "")
         )
     else:
-        st.caption("📝 Analyzing the details you entered manually")
+        st.caption("Analysed input: details entered manually")
 
     show_prediction(analysis)
 
     if analysis["mode"] == "url":
         missing = analysis.get("warnings") or []
         if missing:
-            with st.expander(f"ℹ️ {len(missing)} details were not found on the page (prediction still ran)"):
+            with st.expander(f"{len(missing)} detail(s) were not found on the page (prediction still ran)"):
                 st.write("These values were treated as missing by the preprocessing pipeline:")
                 for item in missing:
                     st.write(f"- {item}")
 
         st.subheader("Extracted job details")
-        st.caption(f"Source page: {analysis.get('site') or 'unknown site'} — {analysis['url']}")
-        if analysis.get("extraction_method"):
-            st.caption(f"Extraction method: {analysis['extraction_method']}")
+        source = analysis.get("site") or "unknown site"
+        method = analysis.get("extraction_method")
+        st.caption(
+            f"Source: {source}" + (f" | Extraction method: {method}" if method else "")
+        )
 
         rows = []
         for key, label in FEATURE_LABELS:
@@ -421,10 +423,10 @@ if analysis:
 # ========================================== 4. Manual entry (fallback only) ===
 if st.session_state.get("manual_mode"):
     st.divider()
-    st.subheader("2. Enter the job posting details manually")
+    st.subheader("2. Job posting details")
     st.caption(
-        "Use this when the link cannot be read. Only the job description is required; "
-        "anything you leave empty is treated as a missing value, exactly like during training."
+        "Use this form when the link cannot be read. Only the job description is required; "
+        "empty fields are treated as missing values, exactly as during training."
     )
 
     def with_current(column: str, fallback: list) -> list:
@@ -526,7 +528,7 @@ if st.session_state.get("manual_mode"):
     if submitted:
         if not description.strip():
             st.warning(
-                "Please paste at least a short job description — the model uses its length as a feature."
+                "Please enter at least a short job description; the model uses its length as a feature."
             )
         else:
             fields = {
@@ -559,7 +561,7 @@ if st.session_state.get("manual_mode"):
 
 st.divider()
 st.caption(
-    "**Disclaimer:** this application is a college mini-project. It gives an estimate "
-    "only and cannot prove that a job posting is fraudulent. Always verify the employer "
-    "independently before sharing personal information or paying any money."
+    "**Disclaimer:** this application is a college mini-project. It provides an estimate "
+    "only and cannot prove that a job posting is fraudulent. Verify the employer "
+    "independently before sharing personal information or making any payment."
 )
